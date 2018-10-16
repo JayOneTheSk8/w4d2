@@ -1,0 +1,72 @@
+<% if edit %>
+  <% title = "Edit Your Cat" %>
+  <% action = cat_url(cat) %>
+  <% button = "Fix Cat!" %>
+<% else %>
+  <% title = "Add Your Cat" %>
+  <% action = cats_url %>
+  <% button = "Add Cat!" %>
+<% end %>
+
+<h2> <%= title %> </h2>
+
+<form action="<%= action %>" method="post">
+  <% if edit %>
+    <input type="hidden" name="_method" value="patch">
+  <% end %>
+
+  <label for="name">Name: </label>
+  <input id="name" type="text" name="cat[name]" value="<%= @cat.name %>">
+
+  <br>
+  <br>
+
+  <label for="sex">Sex: </label>
+  <input id="sex" type="radio" name="cat[sex]" value="M" <%= @cat.sex == "M" ? "checked" : "" %> >M
+  <input id="sex" type="radio" name="cat[sex]" value="F" <%= @cat.sex == "F" ? "checked" : "" %> >F
+  <input id="sex" type="radio" name="cat[sex]" value="U" <%= @cat.sex == "U" ? "checked" : "" %> >U
+
+  <br>
+  <br>
+
+  <label for="color">Color: </label>
+  <select id="color" name="cat[color]">
+    <option selected disabled>-- select a color --</option>
+    <option value="red" <%= @cat.color == "red" ? "selected" : "" %>>Red</option>
+    <option value="orange" <%= @cat.color == "orange" ? "selected" : "" %>>Orange</option>
+    <option value="yellow" <%= @cat.color == "yellow" ? "selected" : "" %>>Yellow</option>
+    <option value="green" <%= @cat.color == "green" ? "selected" : "" %>>Green</option>
+    <option value="blue" <%= @cat.color == "blue" ? "selected" : "" %>>Blue</option>
+    <option value="purple" <%= @cat.color == "purple" ? "selected" : "" %>>Purple</option>
+    <option value="black" <%= @cat.color == "black" ? "selected" : "" %>>Black</option>
+    <option value="white" <%= @cat.color == "white" ? "selected" : "" %>>White</option>
+    <option value="grey" <%= @cat.color == "grey" ? "selected" : "" %>>Grey</option>
+  </select>
+
+  <br>
+  <br>
+
+  <label for="birthday">Birthday: </label>
+  <input id="birthday" type="date" name="cat[birth_date]" value="<%= @cat.birth_date %>" max="<%= Date.today.to_s %>">
+
+  <br>
+  <br>
+
+  <label for="description">Description: </label> <br>
+  <% debugger %>
+  <textarea id="description" name="cat[description]" placeholder="<%= @cat.description %>" >
+  </textarea>
+
+  <br>
+
+  <input type="submit" name="" value="<%= button %>">
+
+</form>
+
+<% if flash[:errors] %>
+<ul>
+  <% flash[:errors].each do |error| %>
+  <li><%= error %></li>
+  <% end %>
+</ul>
+<% end %>
